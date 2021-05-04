@@ -3,4 +3,20 @@ class Post < ApplicationRecord
   
   validates :content, presence: true, length: { maximum: 255 }
   validates :category, presence: true, length: { maximum:50 }
+  
+  has_many :relationships
+  has_many :troubles, through: :relationships, source: :trouble
+  
+  def add_trouble(trouble)
+    self.relationships.find_or_create_by(trouble_id: trouble.id)
+  end
+  
+  def delete_trouble(trouble)
+    relationship = self.relationships.find_by(trouble_id: trouble.id)
+    relationship.destroy if relationship
+  end
+  
+  def include_trouble?(trouble)
+    self.troubles.include?(trouble)
+  end
 end

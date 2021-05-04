@@ -1,12 +1,14 @@
-<%= form_with(model: @post, local: true) do |f| %>
-  <%= render 'layouts/error_messages', model: f.object %>
-  <div class="form-group">
-    <%= f.text_area :content, class: 'form-control', rows: 5 %>
-  </div>
-  <div class="form-group">
-    <%= f.label :category, 'カテゴリー' %>
-    <%= f.select :category, [["肌(メイク以外)", "肌(メイク以外)"], ["メイク", "メイク"], ["ヘアー", "ヘアー"], ["その他", "その他"]], include_blank: "選択して下さい" %>
-  </div>
-  <%= f.hidden_field :age, :value => current_user.age %>
-  <%= f.submit 'Post', class: 'btn btn-primary btn-block' %>
-<% end %>
+<div class="container mt-3">
+  <%= form_with(model: @post, local: true) do |f| %>
+    <%= render 'layouts/error_messages', model: f.object %>
+    <div class="form-group">
+      <%= f.text_area :content, class: 'form-control', rows: 5 %>
+    </div>
+    <div class="form-group">
+      <%= f.label :category, 'カテゴリー' %>
+      <%= f.select :category, [["肌(メイク以外)", "肌(メイク以外)"], ["メイク", "メイク"], ["ヘアー", "ヘアー"], ["その他", "その他"]], include_blank: "選択して下さい" %>
+    </div>
+    <%= f.hidden_field :age, :value => current_user.age %>
+    <%= f.submit 'Post', class: 'btn btn-primary btn-block' %>
+  <% end %>
+</div>

@@ -1,11 +1,17 @@
 Rails.application.routes.draw do
-  root to: 'toppages#index'
+  root to: 'toppages#skin'
+  
+  get 'make', to: 'toppages#make'
+  get 'hair', to: 'toppages#hair'
+  get 'others', to: 'toppages#others'
   
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
   
   get 'signup', to: 'users#new'
+  resources :troubles, only: [:create]
   resources :users, only: [:index, :show, :create]
-  resources :posts, except: [:index]
+  resources :posts, except: [:index, :edit, :update]
+  resources :relationships, only: [:create, :destroy]
 end

@@ -3,6 +3,9 @@ class PostsController < ApplicationController
   before_action :correct_user, only: [:destroy]
   
   def show
+    @post = Post.find(params[:id])
+    @trouble = Trouble.new
+    @troubles = Trouble.all
   end
 
   def new
@@ -18,12 +21,6 @@ class PostsController < ApplicationController
       flash.now[:danger] = "失敗しました"
       render :new
     end
-  end
-
-  def edit
-  end
-
-  def update
   end
 
   def destroy

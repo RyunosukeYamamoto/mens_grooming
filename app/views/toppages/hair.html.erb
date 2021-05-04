@@ -1,0 +1,30 @@
+<div class="make-img">
+  <img src="assets/make_img.jpg" alt="メイク道具の画像" style="width: 100%;">
+</div>
+
+<div class="container">
+  <ul class="nav nav-tabs nav-justified mb-3">
+    <li class="nav-item"><a href="<%= root_path %>" class="nav-link <%= 'active' if current_page?(root_path) %>">Skincare</a></li>
+    <li class="nav-item"><a href="<%= make_path %>" class="nav-link <%= 'active' if current_page?(make_path) %>">Make</a></li>
+    <li class="nav-item"><a href="<%= hair_path %>" class="nav-link <%= 'active' if current_page?(hair_path) %>">Hair</a></li>
+    <li class="nav-item"><a href="<%= others_path %>" class="nav-link <%= 'active' if current_page?(others_path) %>">Others</a></li>
+  </ul>
+
+  <div class="row">
+    <div class="col-sm-3 mb-3">
+      <%= form_with(url: hair_path, method: :get, local: true) do |f| %>
+        <div class="form-group">
+          <%= f.label :age, '年齢' %>
+          <%= f.number_field :age, class: "form-control", value: params[:age] %>
+        </div>
+        <div class="form-group">
+          <%= f.text_field :keyword, class: "form-control", value: params[:keyword], placeholder: "フリーワード" %>
+        </div>
+        <%= f.submit "検索", class: "btn btn-success" %>
+      <% end %>
+    </div>
+    <div class="col-sm-9">
+      <%= render 'posts/posts', posts: @hair_posts %>
+    </div>
+  </div>
+</div>
