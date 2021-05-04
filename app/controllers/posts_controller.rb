@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :require_user_logged_in, except: [:show]
+  before_action :require_user_logged_in, except: [:show, :search_from_trouble]
   before_action :correct_user, only: [:destroy]
   
   def show
@@ -27,6 +27,15 @@ class PostsController < ApplicationController
     @post.destroy
     flash[:success] = "メッセージを削除しました"
     redirect_back(fallback_location: root_path)
+  end
+  
+  def search_from_trouble
+    @troubles = Trouble.all
+    if params[:trouble].present?
+      @posts = Trouble.find(params[:trouble]).posts.order(id: :desc).page(params[:page]).per(10)
+    else
+      @posts = Post.order(id: :desc).page(params[:page]).per(10)
+    end
   end
   
   private

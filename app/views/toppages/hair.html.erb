@@ -22,6 +22,7 @@
         </div>
         <%= f.submit "検索", class: "btn btn-success" %>
       <% end %>
+      <%= link_to "悩みから投稿を検索", search_from_trouble_posts_path %>
     </div>
     <div class="col-sm-9">
       <%= render 'posts/posts', posts: @hair_posts %>

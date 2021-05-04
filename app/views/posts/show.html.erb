@@ -41,15 +41,15 @@
     <% end %>
   <% end %>
   
-  <%= form_with(model: @trouble, local: true) do |f| %>
-    <%= render 'layouts/error_messages', model: f.object %>
-    
-    <%= f.label :word, '新しく悩みを作る' %>
-    <div class="input-group" style="width: 60%;">
-      <%= f.text_field :word, class: "form-control", placeholder: "単語で入力" %>
-      <span class="input-group-btn">
-        <%= f.submit "作る", class: "btn btn-success" %>
-      </span>
-    </div>
+  <% if logged_in? %>
+    <%= form_with(model: @trouble, local: true) do |f| %>
+      <%= f.label :word, '新しく悩みを作る' %>
+      <div class="input-group" style="width: 60%;">
+        <%= f.text_field :word, class: "form-control", placeholder: "単語で入力" %>
+        <span class="input-group-btn">
+          <%= f.submit "作る", class: "btn btn-success" %>
+        </span>
+      </div>
+    <% end %>
   <% end %>
 </div>
