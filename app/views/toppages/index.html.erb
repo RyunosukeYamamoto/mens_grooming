@@ -5,6 +5,50 @@
       <%= link_to 'Sign up now!', signup_path, class: 'btn btn-lg btn-primary' %>
     </div>
   </div>
+<% else %>
+  <div class="make-img">
+    <img src="assets/make_img.jpg" alt="メイク道具の画像" style="width: 100%;">
+  </div>
 <% end %>
 
-<%= render "posts/posts", posts: @posts %>
+<%= form_with(url: root_path, method: :get, local: true) do |f| %>
+  <div class="input-group">
+    <%= f.label :age, '年齢' %>
+    <%= f.number_field :age, class: "form-control", value: params[:age] %>
+  </div>
+  <div class="input-group">
+    <%= f.text_field :keyword, class: "form-control", value: params[:keyword], placeholder: "投稿の検索" %>
+  </div>
+  <%= f.submit "検索", class: "btn btn-success" %>
+<% end %>
+
+
+<div class="tab-wrap">
+  <input id="TAB-skin" type="radio" name="TAB" class="tab-switch" checked="checked" /><label class="tab-label" for="TAB-skin">肌(メイク以外)</label>
+  <div class="tab-content">
+    <ul>
+      <%= render 'posts/posts', posts: @skin_posts %>
+    </ul>
+  </div>
+  
+  <input id="TAB-make" type="radio" name="TAB" class="tab-switch" /><label class="tab-label" for="TAB-make">メイク</label>
+  <div class="tab-content">
+    <ul>
+      <%= render 'posts/posts', posts: @make_posts %>
+    </ul>
+  </div>
+  
+  <input id="TAB-hair" type="radio" name="TAB" class="tab-switch" /><label class="tab-label" for="TAB-hair">ヘアー</label>
+  <div class="tab-content">
+    <ul class="cloths">
+      <%= render 'posts/posts', posts: @hair_posts %>
+    </ul>
+  </div>
+  
+  <input id="TAB-others" type="radio" name="TAB" class="tab-switch" /><label class="tab-label" for="TAB-others">その他</label>
+  <div class="tab-content">
+    <ul class="cloths">
+      <%= render 'posts/posts', posts: @others_posts %>
+    </ul>
+  </div>
+</div>

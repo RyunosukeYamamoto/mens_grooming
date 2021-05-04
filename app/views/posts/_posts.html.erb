@@ -2,5 +2,9 @@
   <h2><%= post.user.name %></h2>
   <h2><%= post.category %></h2>
   <h3><%= post.content %></h3>
+  <h5><%= post.age %></h5>
+  <% if post.user == current_user %>
+    <%= link_to "Delete", post, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-sm' %>
+  <% end %>
 <% end %>
 <%= paginate posts %>

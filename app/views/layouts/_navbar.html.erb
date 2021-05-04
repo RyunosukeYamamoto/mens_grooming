@@ -1,8 +1,16 @@
-<header class="mb-4" style="background-color:blue;">
-  <% if logged_in? %>
-    <p>ログイン完了ユーザ: <%= current_user.name %></p>
-    <%= link_to 'Logout', logout_path, method: :delete %>
-  <% else %>
-    <p>ログインしていません</p>
-  <% end %>
+<header class="mb-4">
+  <nav class="navbar navbar-expand navbar-light bg-light">
+    <%= link_to "MensGrooming", root_path, class: "navbar-brand" %>
+    
+    <ul class="navbar-nav">
+      <% if logged_in? %>
+        <li class="navbar-item"><%= link_to "マイページ", current_user, class: "nav-link" %></li>
+        <li class="navbar-item"><%= link_to "投稿する", new_post_path, class: "nav-link" %></li>
+        <li class="navbar-item"><%= link_to 'ログアウト', logout_path, method: :delete, class: "nav-link" %></li>
+      <% else %>
+        <li class="navbar-item"><%= link_to "ログイン", login_path, class: "nav-link" %></li>
+        <li class="navbar-item"><%= link_to "サインアップ", signup_path, class: "nav-link" %></li>
+      <% end %>
+    </ul>
+  </nav>
 </header>
