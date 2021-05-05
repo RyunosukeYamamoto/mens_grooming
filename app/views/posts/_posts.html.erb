@@ -1,29 +1,35 @@
-<ul class="list-unstyled mt-3">
-  <% posts.each do |post| %>
-    <li class="media mb-3">
-      <img class="mr-2 rounded" src="<%= gravatar_url(post.user, { size: 50 }) %>" alt="">
-      <div class="media-body">
-        <div>
-          <%= link_to post.user.name, user_path(post.user) %> <span class="text-muted"> <%= l post.created_at %></span>
+<% if posts.present? %>
+  <ul class="list-unstyled mt-3">
+    <% posts.each do |post| %>
+      <li class="media mb-3">
+        <img class="mr-2 rounded" src="<%= gravatar_url(post.user, { size: 50 }) %>" alt="">
+        <div class="media-body">
+          <div>
+            <%= link_to post.user.name, user_path(post.user) %> <span class="text-muted"> <%= l post.created_at %></span>
+          </div>
+          <div>
+            <p><%= post.content %></p>
+            <% post.troubles.each do |trouble| %>
+              <span class="badge badge-dark"><%= trouble.word %></span>
+            <% end %>
+            <br>
+            <%= link_to '詳細', post %>
+            <small>カテゴリー：<%= post.category %> / 年齢：<%= post.age %></small>
+            <%= render 'favorites/favo_button', post: post %>
+          </div>
         </div>
-        <div>
-          <p><%= post.content %></p>
-          <% post.troubles.each do |trouble| %>
-            <span class="badge badge-info"><%= trouble.word %></span>
-          <% end %>
-          <br>
-          <%= link_to '詳細', post %>
-          <small>カテゴリー：<%= post.category %> / 年齢：<%= post.age %></small>
-        </div>
-      </div>
-      <% if post.user == current_user %>
-        <div>
-          <%= link_to "Delete", post, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-sm' %>
-        </div>
-      <% end %>
-      <%= render 'favorites/favo_button', post: post %>
-    </li>
-    <hr>
-  <% end %>
-  <%= paginate posts %>
-</ul>
+        <% if post.user == current_user %>
+          <div>
+            <%= link_to post, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-default btn-sm' do %>
+              <i class="fas fa-trash-alt"></i>
+            <% end %>
+          </div>
+        <% end %>
+      </li>
+      <hr>
+    <% end %>
+    <%= paginate posts %>
+  </ul>
+<% else %>
+  <p>投稿がありません</p>
+<% end %>

@@ -27,6 +27,19 @@ class UsersController < ApplicationController
     end
   end
   
+  def update
+    @user = User.find(params[:id])
+    unless @user == current_user
+      redirect_to root_url
+    end
+    if @user.update(user_params)
+      flash[:success] = 'プロフィールを変更しました'
+    else
+      flash[:danger] = 'プロフィールの変更に失敗しました'
+    end
+    redirect_to @user
+  end
+  
   def favorite
     @user = User.find(params[:id])
     @posts = @user.favo_posts.order(id: :desc).page(params[:page]).per(10)
@@ -36,6 +49,6 @@ class UsersController < ApplicationController
   private
   
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation, :skin_type, :age)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :age)
   end
 end

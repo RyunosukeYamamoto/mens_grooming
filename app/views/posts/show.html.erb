@@ -9,46 +9,48 @@
         <div>
           <p><%= @post.content %></p>
           <% @post.troubles.each do |trouble| %>
-            <span class="badge badge-info"><%= trouble.word %></span>
+            <span class="badge badge-dark"><%= trouble.word %></span>
           <% end %>
           <br>
           <small>カテゴリー：<%= @post.category %> / 年齢：<%= @post.age %></small>
+          <%= render 'favorites/favo_button', post: @post %>
         </div>
       </div>
       <% if @post.user == current_user %>
         <div>
-          <%= link_to "Delete", @post, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-sm' %>
+          <%= link_to @post, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-default btn-sm' do %>
+            <i class="fas fa-trash-alt"></i>
+          <% end %>
         </div>
       <% end %>
-      <%= render 'favorites/favo_button', post: @post %>
     </li>
   </ul>
   
   <% if @post.user == current_user %>
+    <h4>この投稿はどの悩みに関連していますか?</h4>
     <% @troubles.each do |trouble| %>
-      <% if @post.include_trouble?(trouble) %>
-        <%= form_with(model: @post.relationships.find_by(trouble_id: trouble.id), local: true, method: :delete) do |f| %>
-          <%= hidden_field_tag :trouble_id, trouble.id %>
-          <%= hidden_field_tag :post_id, @post.id %>
-          <%= f.submit trouble.word, class: 'btn btn-danger btn-block' %>
+      <div class="trouble-button">
+        <% if @post.include_trouble?(trouble) %>
+          <%= form_with(model: @post.relationships.find_by(trouble_id: trouble.id), local: true, method: :delete) do |f| %>
+            <%= hidden_field_tag :trouble_id, trouble.id %>
+            <%= hidden_field_tag :post_id, @post.id %>
+            <%= f.submit trouble.word, class: 'btn btn-dark' %>
+          <% end %>
+        <% else %>
+          <%= form_with(model: @post.relationships.build, local: true) do |f| %>
+            <%= hidden_field_tag :trouble_id, trouble.id %>
+            <%= hidden_field_tag :post_id, @post.id %>
+            <%= f.submit trouble.word, class: 'btn btn-outline-dark' %>
+          <% end %>
         <% end %>
-      <% else %>
-        <%= form_with(model: @post.relationships.build, local: true) do |f| %>
-          <%= hidden_field_tag :trouble_id, trouble.id %>
-          <%= hidden_field_tag :post_id, @post.id %>
-          <%= f.submit trouble.word, class: 'btn btn-outline-primary btn-block' %>
-        <% end %>
-      <% end %>
+      </div>
     <% end %>
-  <% end %>
-  
-  <% if logged_in? %>
     <%= form_with(model: @trouble, local: true) do |f| %>
       <%= f.label :word, '新しく悩みを作る' %>
       <div class="input-group" style="width: 60%;">
         <%= f.text_field :word, class: "form-control", placeholder: "単語で入力" %>
         <span class="input-group-btn">
-          <%= f.submit "作る", class: "btn btn-success" %>
+          <%= f.submit "作る", class: "btn btn-dark" %>
         </span>
       </div>
     <% end %>

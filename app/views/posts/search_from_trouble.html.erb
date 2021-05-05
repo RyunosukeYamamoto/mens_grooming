@@ -1,8 +1,8 @@
 <div class="container mt-3">
   <% if params[:trouble].present? %>
-    <%= link_to "すべての投稿", search_from_trouble_posts_path, class: "btn btn-outline-primary trouble-button" %>
+    <%= link_to "すべての投稿", search_from_trouble_posts_path, class: "btn btn-outline-secondary trouble-button" %>
   <% else %>
-    <%= link_to "すべての投稿", search_from_trouble_posts_path, class: "btn btn-primary trouble-button" %>
+    <%= link_to "すべての投稿", search_from_trouble_posts_path, class: "btn btn-secondary trouble-button" %>
   <% end %>
   
   <% @troubles.each do |trouble| %>
@@ -10,9 +10,9 @@
       <%= form_with(url: search_from_trouble_posts_path, method: :get, local: true) do |f| %>
         <%= hidden_field_tag :trouble, trouble.id %>
         <% if trouble.id == params[:trouble].to_i %>
-          <%= f.submit trouble.word, class: 'btn btn-success trouble-button' %>
+          <%= f.submit trouble.word, class: 'btn btn-dark trouble-button' %>
         <% else %>
-          <%= f.submit trouble.word, class: 'btn btn-outline-success trouble-button' %>
+          <%= f.submit trouble.word, class: 'btn btn-outline-dark trouble-button' %>
         <% end %>
       <% end %>
     </div>

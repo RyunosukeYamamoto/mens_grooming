@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  root to: 'toppages#skin'
+  root to: 'toppages#index'
   
+  get 'skin', to: 'toppages#skin'
   get 'make', to: 'toppages#make'
   get 'hair', to: 'toppages#hair'
   get 'others', to: 'toppages#others'
@@ -11,7 +12,7 @@ Rails.application.routes.draw do
   
   get 'signup', to: 'users#new'
   resources :troubles, only: [:create]
-  resources :users, only: [:index, :show, :create] do
+  resources :users, only: [:index, :show, :create, :update] do
     member do
       get :favorite
     end
