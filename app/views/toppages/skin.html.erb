@@ -13,10 +13,10 @@
 
   <div class="row">
     <div class="col-sm-3 mb-3">
+      <h4>スキンケアの投稿を検索</h4>
       <%= form_with(url: skin_path, method: :get, local: true) do |f| %>
         <div class="form-group">
-          <%= f.label :age, '年齢' %>
-          <%= f.select :age, options_for_select({"10代": "-19", "20代前半": "20-24", "20代後半": "25-29", "30代前半": "30-34", "30代後半": "35-39", "40代以上": "40-"}, params[:age]), include_blank: "選択してください" %>
+          <%= f.select :age, options_for_select({"10代": "-19", "20代前半": "20-24", "20代後半": "25-29", "30代前半": "30-34", "30代後半": "35-39", "40代以上": "40-"}, params[:age]), include_blank: "年齢" %>
         </div>
         <div class="form-group">
           <%= f.text_field :keyword, class: "form-control", value: params[:keyword], placeholder: "フリーワード" %>
