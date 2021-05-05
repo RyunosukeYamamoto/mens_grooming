@@ -11,11 +11,16 @@ Rails.application.routes.draw do
   
   get 'signup', to: 'users#new'
   resources :troubles, only: [:create]
-  resources :users, only: [:index, :show, :create]
+  resources :users, only: [:index, :show, :create] do
+    member do
+      get :favorite
+    end
+  end
   resources :posts, except: [:index, :edit, :update] do
     collection do
       get :search_from_trouble
     end
   end
   resources :relationships, only: [:create, :destroy]
+  resources :favorites, only: [:create, :destroy]
 end

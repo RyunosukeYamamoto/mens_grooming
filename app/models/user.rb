@@ -8,4 +8,19 @@ class User < ApplicationRecord
   has_secure_password
   
   has_many :posts
+  has_many :favorites
+  has_many :favo_posts, through: :favorites, source: :post
+  
+  def favo(post)
+    self.favorites.find_or_create_by(post_id: post.id)
+  end
+  
+  def unfavo(post)
+    favorite = self.favorites.find_by(post_id: post.id)
+    favorite.destroy if favorite
+  end
+  
+  def favo?(post)
+    self.favo_posts.include?(post)
+  end
 end
