@@ -3,17 +3,17 @@
 </div>
 
 <div class="container">
-  <ul class="nav nav-tabs nav-justified mb-3">
-    <li class="nav-item"><a href="<%= root_path %>" class="nav-link <%= 'active' if current_page?(root_path) %>">All</a></li>
-    <li class="nav-item"><a href="<%= skin_path %>" class="nav-link <%= 'active' if current_page?(skin_path) %>">Skincare</a></li>
-    <li class="nav-item"><a href="<%= make_path %>" class="nav-link <%= 'active' if current_page?(make_path) %>">Make</a></li>
-    <li class="nav-item"><a href="<%= hair_path %>" class="nav-link <%= 'active' if current_page?(hair_path) %>">Hair</a></li>
-    <li class="nav-item"><a href="<%= others_path %>" class="nav-link <%= 'active' if current_page?(others_path) %>">Others</a></li>
+  <ul class="nav nav-tabs nav-pills nav-justified">
+    <li class="nav-item index_tab"><a href="<%= root_path %>" class="nav-link <%= 'active' if current_page?(root_path) %>">All</a></li>
+    <li class="nav-item skin_tab"><a href="<%= skin_path %>" class="nav-link <%= 'active' if current_page?(skin_path) %>">Skincare</a></li>
+    <li class="nav-item make_tab"><a href="<%= make_path %>" class="nav-link <%= 'active' if current_page?(make_path) %>">Make</a></li>
+    <li class="nav-item hair_tab"><a href="<%= hair_path %>" class="nav-link <%= 'active' if current_page?(hair_path) %>">Hair</a></li>
+    <li class="nav-item others_tab"><a href="<%= others_path %>" class="nav-link <%= 'active' if current_page?(others_path) %>">Others</a></li>
   </ul>
 
   <div class="row">
-    <div class="col-sm-3 mb-3">
-      <h4>メイクの投稿を検索</h4>
+    <div class="col-sm-3 pt-3 pb-3 search-box">
+      <h4>Search from make</h4>
       <%= form_with(url: make_path, method: :get, local: true) do |f| %>
         <div class="form-group">
           <%= f.select :age, options_for_select({"10代": "-19", "20~24歳": "20-24", "25~29歳": "25-29", "30~34歳": "30-34", "35~39歳": "35-39", "40代以上": "40-"}, params[:age]), include_blank: "年齢" %>
@@ -21,13 +21,13 @@
         <div class="form-group">
           <%= f.text_field :keyword, class: "form-control", value: params[:keyword], placeholder: "フリーワード" %>
         </div>
-        <%= button_tag :type => "submit", :class =>"btn btn-outline-dark btn-s-md" do %>
+        <%= button_tag :type => "submit", :class =>"btn btn-s-md search-button" do %>
           <i class="fa fa-search"></i>検索
         <% end %>
       <% end %>
-      <%= link_to "悩みから投稿を検索", search_from_trouble_posts_path %>
+      <%= link_to "悩みから投稿を検索", search_from_trouble_posts_path, class: "searchfromtrouble" %>
     </div>
-    <div class="col-sm-9">
+    <div class="col-sm-9 post-box">
       <%= render 'posts/posts', posts: @make_posts %>
     </div>
   </div>
